@@ -7,6 +7,7 @@ import {
     timestamp,
     unique,
     varchar,
+    uuid
 } from "drizzle-orm/pg-core";
 
 export const contactUs = pgTable("contactus", {
@@ -23,11 +24,11 @@ export const contactUs = pgTable("contactus", {
 });
 
 export const profile = pgTable("profiles", {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: uuid("id").primaryKey(),
     fullName: varchar("full_name", { length: 256 }),
-    userName: varchar("username", { length: 256 }).notNull().unique(),
+    userName: varchar("username", { length: 256 }).unique(),
     email: varchar({ length: 256 }).unique(),
-    avatarUrl: text(),
+    avatarUrl: text("avatar_url"),
     bio: text(),
     tagLine: text("tag_line"),
 });
@@ -44,7 +45,7 @@ export const profileMetrics = pgTable("profile_metrics", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     score: integer().default(0),
     rank: integer().default(-1),
-    profileId: integer("profile_id").references(() => profile.id),
+    profileId: uuid("profile_id").references(() => profile.id),
 });
 
 export const profileMetricsRelations = relations(profileMetrics, ({ one }) => ({
@@ -68,7 +69,7 @@ export const contests = pgTable("contests", {
     requirements: text().notNull(),
     targetUrl: text("target_url").notNull(),
     reward: integer().default(100).notNull(),
-    creatorId: integer("creator_id").references(() => profile.id),
+    creatorId: uuid("creator_id").references(() => profile.id),
 });
 
 export const contestRelations = relations(contests, ({ one }) => ({
@@ -92,7 +93,7 @@ export const breachProposal = pgTable("breach_proposal", {
     documentLink: text("document_link").notNull(),
     referenceURL: text("reference_url").notNull(),
     proposalLink: text("proposal_link").notNull(),
-    profileId: integer("profile_id").references(() => profile.id),
+    profileId: uuid("profile_id").references(() => profile.id),
 });
 
 export const breachProposalRelations = relations(breachProposal, ({ one }) => ({
@@ -109,7 +110,7 @@ export const testimonals = pgTable("testimonals", {
     updatedAt: timestamp("updated_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     deletedAt: timestamp("deleted_at"),
-    profileId: integer("profile_id").references(() => profile.id),
+    profileId: uuid("profile_id").references(() => profile.id),
 });
 
 export const testimonalsRelations = relations(testimonals, ({ one }) => ({
@@ -124,7 +125,7 @@ export const submissions = pgTable("submissions", {
     updatedAt: timestamp("updated_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     deletedAt: timestamp("deleted_at"),
-    profileId: integer("profile_id").references(() => profile.id),
+    profileId: uuid("profile_id").references(() => profile.id),
     contestId: integer("contest_id").references(() => contests.id),
     status: text({ enum: ["ACCEPTED", "REJECTED", "PENDING"] })
         .default("PENDING")
