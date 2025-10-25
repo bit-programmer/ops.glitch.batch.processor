@@ -9,7 +9,8 @@ const schema = z.object({
     REDIS_PORT_NUMBER: z.string(),
     REDIS_HOST: z.string(),
     REDIS_USERNAME: z.string(),
-    REDIS_PASSWORD: z.string()
+    REDIS_PASSWORD: z.string(),
+    SUPUBASE_DATABASE_URL: z.string()
 });
 
 
