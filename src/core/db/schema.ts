@@ -31,6 +31,7 @@ export const profile = pgTable("profiles", {
     avatarUrl: text("avatar_url"),
     bio: text(),
     tagLine: text("tag_line"),
+    role: text(["Admin", "Student", "Professor"]).default("Student")
 });
 
 export const profileRelations = relations(profile, ({ one, many }) => ({
@@ -45,7 +46,7 @@ export const profileMetrics = pgTable("profile_metrics", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     score: integer().default(0),
     rank: integer().default(-1),
-    profileId: uuid("profile_id").references(() => profile.id),
+    profileId: uuid("profile_id").references(() => profile.id).unique(),
 });
 
 export const profileMetricsRelations = relations(profileMetrics, ({ one }) => ({
