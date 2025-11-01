@@ -15,6 +15,13 @@
       "when": 1761939654046,
       "tag": "0001_striped_kid_colt",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762035854787,
+      "tag": "0002_needy_solo",
+      "breakpoints": true
     }
   ]
 }

@@ -7,7 +7,8 @@ import {
     timestamp,
     unique,
     varchar,
-    uuid
+    uuid,
+    smallint
 } from "drizzle-orm/pg-core";
 
 export const contactUs = pgTable("contactus", {
@@ -112,6 +113,7 @@ export const testimonals = pgTable("testimonals", {
     createdAt: timestamp("created_at").defaultNow().notNull(),
     deletedAt: timestamp("deleted_at"),
     profileId: uuid("profile_id").references(() => profile.id),
+    rating: smallint().default(5)
 });
 
 export const testimonalsRelations = relations(testimonals, ({ one }) => ({

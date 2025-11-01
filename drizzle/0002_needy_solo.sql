@@ -1,0 +1,1 @@
+ALTER TABLE "testimonals" ADD COLUMN "rating" smallint DEFAULT 5;
