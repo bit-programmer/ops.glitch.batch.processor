@@ -69,7 +69,7 @@ export const contests = pgTable("contests", {
     deletedAt: timestamp("deleted_at"),
     shortDesc: text("short_desc").notNull(),
     description: text().notNull(),
-    requirements: text().notNull(),
+    requirements: text().array().default([]),
     targetUrl: text("target_url").notNull(),
     reward: integer().default(100).notNull(),
     creatorId: uuid("creator_id").references(() => profile.id),
