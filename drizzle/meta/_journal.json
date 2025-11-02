@@ -22,6 +22,13 @@
       "when": 1762035854787,
       "tag": "0002_needy_solo",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1762082692749,
+      "tag": "0003_sleepy_ozymandias",
+      "breakpoints": true
     }
   ]
 }

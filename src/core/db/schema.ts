@@ -10,6 +10,7 @@ import {
     uuid,
     smallint
 } from "drizzle-orm/pg-core";
+import { number } from "zod/v4/core/regexes.cjs";
 
 export const contactUs = pgTable("contactus", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -32,7 +33,7 @@ export const profile = pgTable("profiles", {
     avatarUrl: text("avatar_url"),
     bio: text(),
     tagLine: text("tag_line"),
-    role: text(["Admin", "Student", "Professor"]).default("Student")
+    role: text({ enum: ["Admin", "Student", "Professor"] }).default("Student")
 });
 
 export const profileRelations = relations(profile, ({ one, many }) => ({
@@ -72,6 +73,7 @@ export const contests = pgTable("contests", {
     targetUrl: text("target_url").notNull(),
     reward: integer().default(100).notNull(),
     creatorId: uuid("creator_id").references(() => profile.id),
+    submissions: integer().default(0)
 });
 
 export const contestRelations = relations(contests, ({ one }) => ({
