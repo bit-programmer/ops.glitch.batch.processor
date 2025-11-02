@@ -34,7 +34,8 @@ export const profile = pgTable("profiles", {
     avatarUrl: text("avatar_url"),
     bio: text(),
     tagLine: text("tag_line"),
-    role: text({ enum: ["Admin", "Student", "Professor"] }).default("Student")
+    role: text({ enum: ["Admin", "Student", "Professor"] }).default("Student"),
+    socialId: text("social_id").default("")
 });
 
 export const profileRelations = relations(profile, ({ one, many }) => ({
@@ -130,7 +131,6 @@ export const breachProposalRelations = relations(breachProposal, ({ one }) => ({
 export const testimonals = pgTable("testimonals", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     review: text("text"),
-    socialId: text("social_id"),
     updatedAt: timestamp("updated_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     deletedAt: timestamp("deleted_at"),
