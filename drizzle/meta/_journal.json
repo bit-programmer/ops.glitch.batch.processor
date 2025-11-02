@@ -43,6 +43,20 @@
       "when": 1762084508871,
       "tag": "0005_fantastic_johnny_blaze",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1762085091112,
+      "tag": "0006_far_ender_wiggin",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1762086429607,
+      "tag": "0007_striped_titania",
+      "breakpoints": true
     }
   ]
 }

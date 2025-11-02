@@ -8,7 +8,8 @@ import {
     unique,
     varchar,
     uuid,
-    smallint
+    smallint,
+    primaryKey
 } from "drizzle-orm/pg-core";
 import { number } from "zod/v4/core/regexes.cjs";
 
@@ -38,7 +39,7 @@ export const profile = pgTable("profiles", {
 
 export const profileRelations = relations(profile, ({ one, many }) => ({
     profileMetrics: one(profileMetrics),
-    contests: many(contests),
+    profilesToContests: many(profilesToContests),
     breachProposal: many(breachProposal),
     testimonals: many(testimonals),
     submissions: many(submissions),
@@ -72,15 +73,34 @@ export const contests = pgTable("contests", {
     requirements: text().array().default([]),
     targetUrl: text("target_url").notNull(),
     reward: integer().default(100).notNull(),
-    creatorId: uuid("creator_id").references(() => profile.id),
-    submissions: integer().default(0)
+    submissions: integer().default(0),
+    status: text({ enum: ["Active", "Inactive"] }).default("Active")
 });
 
-export const contestRelations = relations(contests, ({ one }) => ({
-    creator: one(profile, {
-        fields: [contests.creatorId],
-        references: [profile.id],
+export const contestRelations = relations(contests, ({ many }) => ({
+    profilesToContests: many(profilesToContests)
+}));
+
+export const profilesToContests = pgTable(
+    'profiles_to_contests',
+    {
+        profileId: uuid("profile_id").notNull().references(() => profile.id),
+        contestId: integer("contest_id").notNull().references(() => contests.id)
+    },
+    (t) => [
+        primaryKey({ columns: [t.profileId, t.contestId] })
+    ]
+);
+
+export const profilesToContestsRelations = relations(profilesToContests, ({ one }) => ({
+    contest: one(contests, {
+        fields: [profilesToContests.contestId],
+        references: [contests.id]
     }),
+    user: one(profile, {
+        fields: [profilesToContests.profileId],
+        references: [profile.id]
+    })
 }));
 
 export const breachProposal = pgTable("breach_proposal", {
