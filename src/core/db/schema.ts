@@ -182,3 +182,24 @@ export const contestCodes = pgTable(
         unique("contestid_code").on(t.contestId, t.code),
     ],
 );
+
+export const contestStatus = pgTable("contest_status", {
+    updatedAt: timestamp("updated_at"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    deletedAt: timestamp("deleted_at"),
+    contestId: integer("contest_id").references(() => contests.id),
+    profileId: uuid("profile_id").references(() => profile.id),
+    status: text({ enum: ["ACCEPTED", "REJECTED"] }).default("REJECTED")
+}, (t) => [
+    primaryKey({ columns: [t.contestId, t.profileId] })
+])
+
+export const profileActivity = pgTable("profile_activities", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    updatedAt: timestamp("updated_at"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    deletedAt: timestamp("deleted_at"),
+    contestId: integer("contest_id").references(() => contests.id),
+    profileId: uuid("profile_id").references(() => profile.id),
+    status: text({ enum: ["ACCEPTED", "REJECTED"] }).default("REJECTED")
+})
