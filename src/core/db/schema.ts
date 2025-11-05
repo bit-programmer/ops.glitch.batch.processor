@@ -191,9 +191,6 @@ export const contestStatus = pgTable("contest_status", {
     contestId: integer("contest_id").references(() => contests.id),
     profileId: uuid("profile_id").references(() => profile.id),
     status: text({ enum: ["ACCEPTED", "REJECTED"] }).default("REJECTED"),
-    steps: text(),
-    improvements: text(),
-    uniqueCode: text()
 }, (t) => [
     primaryKey({ columns: [t.contestId, t.profileId] })
 ])
@@ -208,5 +205,5 @@ export const profileActivity = pgTable("profile_activities", {
     status: text({ enum: ["ACCEPTED", "REJECTED"] }).default("REJECTED"),
     steps: text(),
     improvements: text(),
-    uniqueCode: text()
+    uniqueCode: text('unique_code')
 })
