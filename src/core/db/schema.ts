@@ -176,7 +176,7 @@ export const contestCodes = pgTable(
         deletedAt: timestamp("deleted_at"),
         contestId: integer("contest_id").references(() => contests.id),
         code: text(),
-        isActive: boolean()
+        isActive: boolean('is_active').default(true)
     },
     (t) => [
         unique().on(t.contestId, t.code),
@@ -206,4 +206,7 @@ export const profileActivity = pgTable("profile_activities", {
     contestId: integer("contest_id").references(() => contests.id),
     profileId: uuid("profile_id").references(() => profile.id),
     status: text({ enum: ["ACCEPTED", "REJECTED"] }).default("REJECTED"),
+    steps: text(),
+    improvements: text(),
+    uniqueCode: text()
 })

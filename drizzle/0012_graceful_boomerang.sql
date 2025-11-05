@@ -1,0 +1,1 @@
+ALTER TABLE "contest_codes" RENAME COLUMN "isActive" TO "is_active";

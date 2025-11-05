@@ -1,0 +1,1 @@
+ALTER TABLE "contest_codes" ALTER COLUMN "isActive" SET DEFAULT true;
