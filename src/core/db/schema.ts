@@ -9,9 +9,8 @@ import {
     varchar,
     uuid,
     smallint,
-    primaryKey
+    primaryKey,
 } from "drizzle-orm/pg-core";
-import { number } from "zod/v4/core/regexes.cjs";
 
 export const contactUs = pgTable("contactus", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -35,7 +34,8 @@ export const profile = pgTable("profiles", {
     bio: text(),
     tagLine: text("tag_line"),
     role: text({ enum: ["Admin", "Student", "Professor"] }).default("Student"),
-    socialId: text("social_id").default("")
+    socialId: text("social_id").default(""),
+    createdAt: timestamp("created_at").defaultNow().notNull()
 });
 
 export const profileRelations = relations(profile, ({ one, many }) => ({
@@ -48,7 +48,7 @@ export const profileRelations = relations(profile, ({ one, many }) => ({
 
 export const profileMetrics = pgTable("profile_metrics", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    score: integer().default(0),
+    opsScore: integer("ops_score").default(0),
     rank: integer().default(-1),
     profileId: uuid("profile_id").references(() => profile.id).unique(),
 });
@@ -75,7 +75,8 @@ export const contests = pgTable("contests", {
     targetUrl: text("target_url").notNull(),
     reward: integer().default(100).notNull(),
     submissions: integer().default(0),
-    status: text({ enum: ["Active", "Inactive"] }).default("Active")
+    status: text({ enum: ["Active", "Inactive"] }).default("Active"),
+    reference: text()
 });
 
 export const contestRelations = relations(contests, ({ many }) => ({
@@ -206,4 +207,4 @@ export const profileActivity = pgTable("profile_activities", {
     steps: text(),
     improvements: text(),
     uniqueCode: text('unique_code')
-})
+});

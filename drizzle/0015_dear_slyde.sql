@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS contests 
+ADD COLUMN IF NOT EXISTS reference text;

@@ -10,6 +10,7 @@
     "strict": true,
     "skipLibCheck": true
   },
+  "allowImportingTsExtensions":true,
   "include": [
     "./*.js",
     "src/**/*.ts",

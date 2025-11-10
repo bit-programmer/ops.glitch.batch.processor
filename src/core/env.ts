@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { z } from "zod";
-import { CURRENT_NODE_ENV, NODE_ENVIRONMENTS } from "../utils/constants";
+import { CURRENT_NODE_ENV, NODE_ENVIRONMENTS } from "../utils/constants.ts";
 
 dotenv.config({ path: `.env.${CURRENT_NODE_ENV}` });
 
